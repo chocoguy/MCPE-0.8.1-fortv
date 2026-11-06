@@ -1,5 +1,5 @@
 #pragma once
-#include <_types.h>
+#include <mcpe_types.h>
 
 struct IntRectangle{
 	int32_t minX, minY;

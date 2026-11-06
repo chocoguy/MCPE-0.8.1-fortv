@@ -1,5 +1,5 @@
 #pragma once
-#include <_types.h>
+#include <mcpe_types.h>
 #include <RakString.h>
 
 struct PingedCompatibleServer

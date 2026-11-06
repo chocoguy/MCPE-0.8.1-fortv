@@ -3,7 +3,7 @@
 #include <tile/material/LiquidMaterial.hpp>
 #include <tile/material/DecorationMaterial.hpp>
 #include <tile/material/WebMaterial.hpp>
-#include <_types.h>
+#include <mcpe_types.h>
 
 Material* Material::air, *Material::dirt;
 Material* Material::wood, *Material::stone;

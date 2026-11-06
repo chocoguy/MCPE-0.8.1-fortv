@@ -9,7 +9,7 @@ struct ENGINE{
 #endif
 
 	int32_t field_4;
-#ifdef USEGLES
+#if defined(USEGLES) && !defined(__APPLE__) //no EGL on Apple platforms
 	EGLDisplay field_8;
 	EGLSurface surface;
 	EGLContext field_10;

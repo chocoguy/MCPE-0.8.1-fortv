@@ -1,8 +1,13 @@
 #ifndef ANDROID
 #ifdef USEOPENAL
 #include <sound/SoundSystemAL.hpp>
+#ifdef __APPLE__
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
+#else
 #include <AL/al.h>
 #include <AL/alc.h>
+#endif
 #include <sound/SoundDesc.hpp>
 #include <math.h>
 #include <sounddata.hpp>

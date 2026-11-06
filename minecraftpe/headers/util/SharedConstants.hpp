@@ -1,5 +1,5 @@
 #pragma once
-#include <_types.h>
+#include <mcpe_types.h>
 
 struct SharedConstants{
 	static int32_t getVersionCode(int32_t a, int32_t b, int32_t c, int32_t d);

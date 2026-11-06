@@ -1,10 +1,13 @@
 #ifndef ANDROID
 #include <network/mco/CurlRestRequestJob.hpp>
+#ifndef NOCURL
 #include <curl/curl.h>
+#endif
 #include <network/RestService.hpp>
 
 static volatile bool canUseCurl = 0;
 CurlRestRequestJob::CurlRestRequestJob() {
+#ifndef NOCURL //without curl canUseCurl stays 0
 	static bool globalInit = 0;
 	if(!globalInit) {
 		globalInit = 1;
@@ -15,6 +18,8 @@ CurlRestRequestJob::CurlRestRequestJob() {
 		}
 		canUseCurl = 1;
 	}
+#endif
+	this->httpStatusOrNegativeError = 0;
 	this->field_58 = 0;
 	this->field_5C = 0;
 	this->started = 0;
@@ -47,11 +52,13 @@ void CurlRestRequestJob::stop() {
 	this->field_60.notify_one();
 }
 
+#ifndef NOCURL
 static size_t curl_onWrite(char* contents, size_t size, size_t nmemb, void* userp) {
 	std::string* str = (std::string*)userp;
 	str->append(contents, size * nmemb);
 	return size * nmemb;
 }
+#endif
 
 void CurlRestRequestJob::run() {
 	std::unique_lock<std::mutex> v5(this->mutex, std::defer_lock);
@@ -59,8 +66,11 @@ void CurlRestRequestJob::run() {
 
 	if(!canUseCurl) {
 		printf("curl: not using because canUseCurl is 0\n");
+		this->httpStatusOrNegativeError = -1; //finish() reports it as a network error instead of leaving the job unfinished
+		this->trySetStatus(JS_FINISHED);
 		return;
 	}
+#ifndef NOCURL
 
 	this->started = 1;
 	this->trySetStatus(JS_STARTED);
@@ -139,6 +149,7 @@ void CurlRestRequestJob::run() {
 
 	this->trySetStatus(JS_FINISHED);
 	this->started = 0;
+#endif
 }
 void CurlRestRequestJob::finish(){
 	if(this->getStatus() != JS_STOPPED) {

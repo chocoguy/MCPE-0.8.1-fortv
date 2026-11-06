@@ -1,5 +1,5 @@
 #pragma once
-#include <_types.h>
+#include <mcpe_types.h>
 
 struct OptionStrings{
 	static char_t* Multiplayer_Username;

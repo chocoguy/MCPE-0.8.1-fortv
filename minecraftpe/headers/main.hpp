@@ -1,5 +1,5 @@
 #pragma once
-#include <_types.h>
+#include <mcpe_types.h>
 #ifndef ANDROID
 #include <AppPlatform_sdl.hpp>
 

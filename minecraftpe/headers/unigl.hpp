@@ -1,10 +1,15 @@
 #ifndef UNIGL_H
 #define UNIGL_H
-#include <_types.h>
+#include <mcpe_types.h>
 #ifdef USEGLES
+#ifdef __APPLE__
+	#include <OpenGLES/ES1/gl.h>
+	#include <OpenGLES/ES1/glext.h>
+#else
 	#include <GLES/gl.h>
 	#include <EGL/egl.h>
 	#include <GLES/glext.h>
+#endif
 
 	void gluPerspective(GLfloat fovy, GLfloat aspect, GLfloat znear, GLfloat zfar);
 #else

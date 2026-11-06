@@ -1,5 +1,5 @@
 #pragma once
-#include <_types.h>
+#include <mcpe_types.h>
 #include <string>
 struct IDataInput{
 	bool_t hasBytesLeft(int32_t a2);

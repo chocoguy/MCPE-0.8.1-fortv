@@ -1,5 +1,5 @@
 #pragma once
-#include <_types.h>
+#include <mcpe_types.h>
 
 struct Synth{
 	void create(int32_t, int32_t, float*);

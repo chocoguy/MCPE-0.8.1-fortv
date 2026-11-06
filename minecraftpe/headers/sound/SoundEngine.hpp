@@ -1,9 +1,9 @@
 #pragma once
-#include <_types.h>
+#include <mcpe_types.h>
 #if defined(__WIN32__)
 #include <sound/SoundSystemDirectSound.hpp>
 #define SS_SUPER_CLASS SoundSystemDirectSound
-#elif not defined(ANDROID) and defined(__linux__)
+#elif !defined(ANDROID) && (defined(__linux__) || defined(__APPLE__))
 #include <sound/SoundSystemAL.hpp>
 #define SS_SUPER_CLASS SoundSystemAL
 #else

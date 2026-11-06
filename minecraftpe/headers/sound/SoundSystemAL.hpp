@@ -2,15 +2,22 @@
 
 #ifndef ANDROID
 #ifdef USEOPENAL
-#include <_types.h>
+#include <mcpe_types.h>
 #include <sound/SoundSystem.hpp>
+#ifdef __APPLE__
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
+#else
+#include <AL/al.h>
+#include <AL/alc.h>
+#endif
 
 struct SoundSystemAL: public SoundSystem
 {
 	static const int MAX_PLAYED = 4;
 
-	struct ALCdevice* device = 0;
-	struct ALCcontext* context = 0;
+	ALCdevice* device = 0;
+	ALCcontext* context = 0;
 	int playedCnt = 0;
 	uint32_t buffers[MAX_PLAYED] = {0};
 	uint32_t sources[MAX_PLAYED] = {0};

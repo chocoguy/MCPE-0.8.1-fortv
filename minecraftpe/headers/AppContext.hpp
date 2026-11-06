@@ -1,10 +1,10 @@
 #pragma once
-#include <_types.h>
+#include <mcpe_types.h>
 #ifdef USEGLES
 #include <unigl.hpp>
 #endif
 struct AppContext{
-#ifdef USEGLES
+#if defined(USEGLES) && !defined(__APPLE__) //no EGL on Apple platforms
 	EGLDisplay  field_0;
 	EGLContext field_4;
 	EGLSurface field_8;

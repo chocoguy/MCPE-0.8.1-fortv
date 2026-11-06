@@ -1,7 +1,7 @@
 #pragma once
 #ifdef __WIN32__
 #ifndef FORCEOPENAL
-#include <_types.h>
+#include <mcpe_types.h>
 #include <dsound.h>
 #include <sound/SoundSystem.hpp>
 

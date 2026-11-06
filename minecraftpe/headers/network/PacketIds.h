@@ -1,5 +1,5 @@
 #pragma once
-#include <_types.h>
+#include <mcpe_types.h>
 
 #define PID_LOGIN_PACKET					((int32_t)0x82)
 #define PID_LOGIN_STATUS_PACKET			((int32_t)0x83)

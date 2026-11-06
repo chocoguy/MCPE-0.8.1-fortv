@@ -1,5 +1,5 @@
 #pragma once
-#include <_types.h>
+#include <mcpe_types.h>
 #include <gui/buttons/Button.hpp>
 
 struct Minecraft;

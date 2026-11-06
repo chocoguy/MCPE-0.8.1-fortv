@@ -1,6 +1,6 @@
 #ifdef ANDROID
 #pragma once
-#include <_types.h>
+#include <mcpe_types.h>
 #include <jni.h>
 struct JVMAttacher{
     JavaVM* vm;
