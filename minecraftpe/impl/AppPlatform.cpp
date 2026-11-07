@@ -27,7 +27,7 @@ AppPlatform::AppPlatform(void){
 	if(exts.find("GL_APPLE_texture_max_level", 0) == -1) maxTextureLevel = 0;
 	else{
 #ifdef USEGLES
-		maxTextureLevel = GL_APPLE_texture_max_level; //0x813D
+		maxTextureLevel = 0x813D; //GL_TEXTURE_MAX_LEVEL_APPLE. GL_APPLE_texture_max_level is the extension's flag (1), which glTexParameteri refuses: mipmapped textures then stay incomplete and draw white on Apple GPUs, which have the extension
 #else
 		maxTextureLevel = GL_TEXTURE_MAX_LEVEL; //0x813D
 #endif
@@ -37,7 +37,7 @@ AppPlatform::AppPlatform(void){
 	if(exts.find("GL_EXT_texture_filter_anisotropic", 0) == -1) anisotropicFilter = 0;
 	else{
 #ifdef USEGLES
-		anisotropicFilter = GL_EXT_texture_filter_anisotropic; //0x84FE
+		anisotropicFilter = 0x84FE; //GL_TEXTURE_MAX_ANISOTROPY_EXT, not the extension's flag (1)
 #else
 		anisotropicFilter = GL_TEXTURE_MAX_ANISOTROPY; //0x84FE
 #endif

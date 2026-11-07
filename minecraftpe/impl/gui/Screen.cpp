@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <gui/Screen.hpp>
 #include <Minecraft.hpp>
 #include <gui/GuiElement.hpp>
@@ -47,6 +48,16 @@ void Screen::init(struct Minecraft* mc, int32_t w, int32_t h){
 	this->width = w;
 	this->init();
 	this->setupPositions();
+#ifdef TVTWEAKS
+	//The D-pad steps through field_2C, which only the Xperia Play era screens fill. Elsewhere take the screen's buttons, top to bottom and left to right.
+	//It starts on the first, as before: which buttons are on can change after init (Play waits for the license check)
+	if(this->field_2C.empty() && !this->buttons.empty()) {
+		this->field_2C = this->buttons;
+		std::stable_sort(this->field_2C.begin(), this->field_2C.end(), [](Button* a, Button* b) {
+			return a->posY != b->posY ? a->posY < b->posY : a->posX < b->posX;
+		});
+	}
+#endif
 	this->updateTabButtonSelection();
 }
 void Screen::setSize(int32_t w, int32_t h){
@@ -308,16 +319,31 @@ void Screen::keyPressed(int32_t a2) {
 		int v7 = this->field_2C.size();
 		if(v7) {
 			if(a2 == this->minecraft->options.keyMenuNext.keyCode) {
+#ifdef TVTWEAKS
+				//step over buttons that are hidden or off (Realms, which is gone), so the D-pad lands on one that works
+				for(int i = 0; i < v7; ++i) {
+					this->field_44 = (this->field_44 + 1) % v7;
+					if(this->field_2C[this->field_44]->visible && this->field_2C[this->field_44]->active) break;
+				}
+#else
 				int v9 = this->field_44 + 1;
 				if(v9 == v7) v9 = 0;
 				this->field_44 = v9;
+#endif
 			}
 			if(a2 == this->minecraft->options.keyMenuPrevious.keyCode) {
+#ifdef TVTWEAKS
+				for(int i = 0; i < v7; ++i) {
+					this->field_44 = (this->field_44 + v7 - 1) % v7;
+					if(this->field_2C[this->field_44]->visible && this->field_2C[this->field_44]->active) break;
+				}
+#else
 				int v10 = this->field_44 - 1;
 				this->field_44 = v10;
 				if(v10 == -1) {
 					this->field_44 = v7 - 1;
 				}
+#endif
 			}
 
 			if(a2 == this->minecraft->options.keyMenuOk.keyCode) {

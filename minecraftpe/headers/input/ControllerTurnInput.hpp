@@ -19,7 +19,11 @@ struct ControllerTurnInput: ITurnInput
 		this->field_20 = 0;
 		this->field_18 = 0.0;
 		this->field_1C = 0.0;
+#ifdef TVTWEAKS
+		this->field_10 = 1; //joystick: the turn rate follows the right stick's tilt (2 is the Xperia touchpad's drag)
+#else
 		this->field_10 = 2;
+#endif
 		this->field_14 = 2;
 	}
 	virtual ~ControllerTurnInput() {

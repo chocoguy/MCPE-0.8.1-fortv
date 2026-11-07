@@ -229,8 +229,8 @@ void ParticleEngine::tick() {
 			Particle* prt = p.second[i];
 			prt->tick();
 			if(prt->isDead) {
+				p.second.erase(p.second.begin() + i); //the dead one, then step back so the next one is not skipped (erasing at i - 1 removed a live particle, and at i = 0 erased before begin())
 				--i;
-				p.second.erase(p.second.begin() + i);
 				--sz;
 				this->_release(prt);
 			}

@@ -14,6 +14,20 @@ struct AppPlatform_tvos : AppPlatform{
 	std::function<void(const std::string&, int32_t)> onShowKeyboard;
 	std::function<void()> onHideKeyboard;
 
+	//The platform dialogs the game polls (Android shows native ones): showDialog(id), createUserInput(), then getUserInputStatus()
+	//until it is 0 (cancelled) or 1 (done) and getUserInput(). Dialog 1 creates a world: {name, seed, "survival" or "creative"};
+	//4 renames one: {name}. 2 is the chat screen's, which types through showKeyboard instead.
+	enum { DIALOG_CREATE_WORLD = 1, DIALOG_CHAT = 2, DIALOG_RENAME_WORLD = 4 };
+	int32_t dialogId = 0;
+	int32_t userInputStatus = -1;
+	std::vector<std::string> userInput;
+	std::function<void(int32_t)> onCreateUserInput;   //set by the shell: present dialog <id>, then call finishUserInput
+	void finishUserInput(int32_t status, const std::vector<std::string>& input);
+	virtual void showDialog(int32_t);
+	virtual void createUserInput(void);
+	virtual int32_t getUserInputStatus(void);
+	virtual std::vector<std::string> getUserInput(void);
+
 	AppPlatform_tvos(int32_t width, int32_t height);
 	void setScreenSize(int32_t width, int32_t height);
 

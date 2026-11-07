@@ -68,6 +68,28 @@ void AppPlatform_tvos::hideKeyboard(void) {
 void AppPlatform_tvos::updateTextBoxText(const std::string& text) {
 	this->textboxText = text;
 }
+void AppPlatform_tvos::showDialog(int32_t id) {
+	this->dialogId = id;
+}
+void AppPlatform_tvos::createUserInput(void) {
+	this->userInput.clear();
+	if(this->dialogId == DIALOG_CHAT || !this->onCreateUserInput) {
+		this->userInputStatus = this->dialogId == DIALOG_CHAT ? -1 : 0;
+		return;
+	}
+	this->userInputStatus = -1; //asked: the screen polls until the shell answers
+	this->onCreateUserInput(this->dialogId);
+}
+void AppPlatform_tvos::finishUserInput(int32_t status, const std::vector<std::string>& input) {
+	this->userInput = input;
+	this->userInputStatus = status;
+}
+int32_t AppPlatform_tvos::getUserInputStatus(void) {
+	return this->userInputStatus;
+}
+std::vector<std::string> AppPlatform_tvos::getUserInput(void) {
+	return this->userInput;
+}
 void AppPlatform_tvos::finish(void) {
 	//tvOS apps do not quit themselves; the TV button leaves the game
 }

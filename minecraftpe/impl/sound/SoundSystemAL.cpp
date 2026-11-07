@@ -131,6 +131,12 @@ void SoundSystemAL::playAt(const struct SoundDesc& a2, float a3, float a4, float
 				alBufferData(this->buffers[i], to_al_format(a2.channels, a2.bytesPerSample * 8), a2.field_0, a2.field_4, a2.sampleRate);
 				alSourcei(this->sources[i], AL_BUFFER, this->buffers[i]);
 				alSourcePlay(this->sources[i]);
+				static bool_t logged = 0; //once, so a log shows that sounds reach OpenAL
+				if(!logged) {
+					logged = 1;
+					printf("OpenAL: playing sounds (the first: %d channel(s), %d bits, %d Hz)\n", (int)a2.channels, (int)a2.bytesPerSample * 8, (int)a2.sampleRate);
+				}
+				_checkErr();
 				break;
 			}
 		}

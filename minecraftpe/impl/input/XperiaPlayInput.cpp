@@ -31,6 +31,17 @@ void XperiaPlayInput::tick(Player* player){
 	bool sneaking = this->sneaking;
 	KeyboardInput::tick(player);
 	this->sneaking = sneaking;
+#ifdef TVTWEAKS
+	//a game controller's left stick moves the player as far as it is tilted; TVCraft's TVInput.mm keeps it in Controller's first stick
+	//(only the values: isTouched(1) stays the Xperia touchpad's sneak toggle)
+	{
+		float sx = Controller::stickValuesX[0], sy = Controller::stickValuesY[0];
+		if(sx * sx + sy * sy > 0.15f * 0.15f) {
+			this->forwardInput = sy;
+			this->strafeInput = -sx;
+		}
+	}
+#endif
 	this->flyUpPressed = this->jumping && this->inputs[0];
 	this->flyDownPressed = this->jumping && this->inputs[1];
 
