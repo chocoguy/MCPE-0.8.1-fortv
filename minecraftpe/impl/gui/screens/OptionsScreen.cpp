@@ -62,8 +62,13 @@ void OptionsScreen::generateOptionScreens(void) {
 	this->optionPanes.push_back(new OptionsPane());
 
 	this->optionPanes[0]->createOptionsGroup("options.group.game")->addOptionItem(&Options::Option::NAME, this->minecraft)->addOptionItem(&Options::Option::DIFFICULTY, this->minecraft)->addOptionItem(&Options::Option::THIRD_PERSON, this->minecraft)->addOptionItem(&Options::Option::SERVER_VISIBLE, this->minecraft);
+#ifdef TVTWEAKS
+	//Apple TV: no Realms (its servers are gone) and no touch screen: sensitivity and inverted look still apply to a controller's right stick
+	this->optionPanes[1]->createOptionsGroup("options.group.input")->addOptionItem(&Options::Option::SENSITIVITY, this->minecraft)->addOptionItem(&Options::Option::INVERT_MOUSE, this->minecraft);
+#else
 	this->optionPanes[0]->createOptionsGroup("options.group.realms")->addLoginItem(this->minecraft);
 	this->optionPanes[1]->createOptionsGroup("options.group.input")->addOptionItem(&Options::Option::SENSITIVITY, this->minecraft)->addOptionItem(&Options::Option::INVERT_MOUSE, this->minecraft)->addOptionItem(&Options::Option::LEFT_HANDED, this->minecraft)->addOptionItem(&Options::Option::USE_TOUCHSCREEN, this->minecraft)->addOptionItem(&Options::Option::USE_TOUCH_JOYPAD, this->minecraft)->addOptionItem(&Options::Option::PIXELS_PER_MILLIMETER, this->minecraft);
+#endif
 	if(this->minecraft->platform()->supportsVibration()) {
 		this->optionPanes[1]->createOptionsGroup("options.group.feedback")->addOptionItem(&Options::Option::DESTROY_VIBRATION, this->minecraft);
 	}
